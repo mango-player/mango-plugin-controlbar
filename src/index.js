@@ -84,6 +84,11 @@ const chimeeControl = {
     }
   },
   events: {
+    // 调度信息获取的时候设置清晰度列表
+    dispactherDataComplete(data){
+      this.children.clarity.initTextList(data.stream)
+    },
+
     frontAdBegin(){
       console.log('front ad begin')
       this.adlock = true;

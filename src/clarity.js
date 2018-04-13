@@ -24,6 +24,7 @@ const defaultOption = {
   defaultEvent: {
     click: 'click'
   },
+  list: [],  // 清晰度列表
   duration: 10,
   increment: 1
 };
@@ -49,8 +50,17 @@ export default class Clarity extends Base {
     this.initTextList();
   }
 
-  initTextList () {
-    this.option.list.forEach(item => {
+  initTextList (clarityList) {
+    var items = clarityList || this.option.list
+    this.option.list = items;
+    // 设置默认状态
+    if(items.length > 0) {
+      this.$listUl.html('');
+      this.$text.html(items[0].name)
+    }
+
+    // 设置选项
+    items.forEach(item => {
       const li = $(document.createElement('li'));
       li.attr('data-url', item.src);
       li.text(item.name);
@@ -60,6 +70,8 @@ export default class Clarity extends Base {
       }
       this.$listUl.append(li);
     });
+
+    
   }
 
   click (e) {

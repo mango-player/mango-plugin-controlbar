@@ -14,18 +14,19 @@ function hundleChildren (plugin) {
       progressTime: false, // 播放时间
       progressBar: false, // 播放进度控制条
       volume: true, // 声音控制
+      clarity: true, // 清晰度控制
       screen: true, // 全屏控制
     } : {
       play: true, // 底部播放暂停按钮
       progressTime: true, // 播放时间
       progressBar: true, // 播放进度控制条
       volume: true, // 声音控制
+      clarity: true, // 清晰度控制
       screen: true, // 全屏控制
     };
   }else{
     childConfig = plugin.$config.children;
   }
-
   return childConfig;
 }
 
@@ -73,7 +74,8 @@ export function createChild (plugin) {
           }
           break;
         case 'clarity':
-          if(childConfig.clarity && Array.isArray(childConfig.clarity.list)) {
+          // && Array.isArray(childConfig.clarity.list)
+          if(childConfig.clarity) {
             children.clarity = new Clarity(plugin, childConfig.clarity);
           }
           break;
