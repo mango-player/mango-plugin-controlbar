@@ -42,6 +42,7 @@ const chimeeControl = {
   data: {
     children: {},
     show: false,
+    adlock: true,
     disabled: true
   },
   level: 99,
@@ -83,28 +84,45 @@ const chimeeControl = {
     }
   },
   events: {
-    loadstart () {
+    frontAdBegin(){
+      console.log('front ad begin')
+      this.adlock = true;
       this._disable(true);
+      setStyle(this.$dom, {
+        visibility: 'hidden'
+      });
+    },
+    videoPlay(){
+      console.log('video play')
+      this.adlock = false;
+      this._disable(false);
+    },
+    loadstart () {
+      // this._disable(true);
     },
     canplay () {
-      this._disable(false);
+      // this._disable(false);
     },
     play () {
       this.children.play && this.children.play.changeState('play');
       this.config.barShowByMouse === 'move' && this._hideItself();
     },
     pause () {
+      if(this.adlock) return;
       this.children.play && this.children.play.changeState('pause');
       this._showItself();
     },
     c_mouseenter () {
+      if(this.adlock) return;
       if(this.config.barShowByMouse === 'move') return;
       this._showItself();
     },
     c_mousemove () {
+      if(this.adlock) return;
       this._mousemove();
     },
     c_mouseleave () {
+      if(this.adlock) return;
       if(this.config.barShowByMouse === 'move') return;
       this._hideItself();
     },
