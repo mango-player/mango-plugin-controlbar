@@ -40,7 +40,7 @@ chimee-volume-state-low,
 chimee-volume-state-high,
 chimee-control-state-pause,
 chimee-control-state-play,
-chimee-progressbar-tip,
+chimee-progressbar-preview,
 chimee-screen-full,
 chimee-clarity-list,
 chimee-screen-small {
@@ -144,40 +144,24 @@ chimee-progresstime-total {
 /* 播放器控制条 */
 chimee-progressbar.chimee-flex-component {
   position: absolute;
-  bottom: 30px;
+  bottom: 50px;
   left: 0px;
+  height: 10px;
   width: 100%;
   margin-left: 0px;
 }
 
 chimee-progressbar-wrap {
   display: inline-block;
-  height: 100%;
+  height: 10px;
   position: absolute;
-  left: 1em;
-  right: 1em;
+  left: 16px;
+  right: 16px;
   top: 0;
-}
-
-chimee-progressbar.progressbar-layout-top {
-  position: static;
-
-  & chimee-progressbar-wrap {
-    top: -1.6em;
-    height: 1.6em;
-    left: 0;
-    right: 0;
-  }
-
-  & .chimee-progressbar-line {
-    left: 0;
-    top: 0.8em;
-  }
 }
 
 .chimee-progressbar-line {
   position: absolute;
-  top: 0.9em;
   left: 0;
   display: inline-block;
   height: 6px;
@@ -213,19 +197,24 @@ chimee-progressbar-ball {
   pointer-events: none;
 }
 
+chimee-progressbar-preview {
+  position: absolute;
+  bottom: 30px;
+  width: 130px;
+  height: 74px;
+  background: #212121;
+  color: #fff;
+  border-radius: 4px;
+
+  background-image: url(https://2img.hitv.com/preview/frame_images/pcframes/2018/zongyi/96863/2149453/12364584_1.jpg);
+  background-position: -910px 0px;
+}
+
 chimee-progressbar-tip {
   position: absolute;
-  bottom: 0.5em;
-  top: -1.5em;
-  left: 0;
-  z-index: 10;
-  padding: 0 0.5em;
-  height: 1.5em;
-  background: #fff;
-  line-height: 1.5em;
-  border-radius: 4px;
-  color: #000;
-  text-align: center;
+  bottom: 0px;
+  right: 6px;
+  color: #fff;
 }
 
 /* 音量控制 */
@@ -406,7 +395,7 @@ chimee-clarity.chimee-flex-component {
   font-size: 16px;
 }
 
-chimee-clarity.chimee-flex-component:hover chimee-clarity-list {
+chimee-clarity.on chimee-clarity-list {
   display: inline-block;
 }
 
@@ -417,24 +406,30 @@ chimee-clarity.chimee-flex-component svg {
 
 chimee-clarity-list {
   position: absolute;
-  left: 0;
-  bottom: 1em;
-  width: 100%;
-  padding-bottom: 1.5em;
-  opacity: 0.8;
+  left: -20px;
+  bottom: 60px;
+  width: 84px;
+  overflow: hidden;
+  background: rgba(28,28,28,.9);
+  border-radius: 4px;
   box-sizing: content-box;
   line-height: 0;
 }
 
 chimee-clarity-list ul {
   margin: 0;
-  padding: 0.5em 0;
-  background: #292929;
-  line-height: 2em;
+  padding: 10px 0;
+  background: rgba(28,28,28,.9);
+  font-size: 16px;
+  line-height:30px;
 }
 
 chimee-clarity-list li {
-  list-style-type: none;
+  width: 100%;
+  height: 30px;
+  display: block;
+  line-height: 30px;
+  text-align: center;
 }
 
 chimee-clarity-list li:hover,
@@ -442,17 +437,36 @@ chimee-clarity-list li.active {
   color: var(--barColor);
 }
 
-chimee-clarity-list-arrow {
-  position: absolute;
-  bottom: 1.5em;
-  width: 100%;
-}
 
-
+/* 设置 */
 chimee-setting.chimee-flex-component{
   width: 40px;
   margin-left: 10px;
 }
 
+chimee-setting-panel {
+  display: none;
+  position: absolute;
+  bottom: 66px;
+  right: 16px;
+  width: 210px;
+  height: 50px;
+  background: #212121;
+  opacity: 0.95;
+  color: #fff;
+  line-height: 50px;
+  border-radius: 4px;
+  padding-left: 20px;
+  font-size: 16px;
+}
 
+chimee-setting.on chimee-setting-panel{display: block;}
+
+chimee-setting-panel span{
+  margin-right: 20px;
+}
+
+chimee-setting-panel span.yes{
+  color: var(--barColor);
+}
 

@@ -1,4 +1,4 @@
-import {deepAssign, isObject, addClassName, removeClassName, $} from 'mango-helper';
+import {deepAssign, isObject, hasClassName, addClassName, removeClassName, $} from 'mango-helper';
 import Base from './base.js';
 
 /**
@@ -14,20 +14,23 @@ const defaultOption = {
         </svg>
     </chimee-setting-btn>
     <chimee-setting-panel>
-        <div class="ucbox">
-            <dl class="clearfix">
-                <dt class="w90">跳过片头片尾：</dt>
-                <dd>
-                    <a class="select focus" href="javascript:;">是</a>
-                    <a class="select" href="javascript:;">否</a>
-                </dd>
-            </dl>
-        </div>
+        <span>跳过片头片尾：</span><span class="yes">是</span><span class="no">否</span>
     </chimee-setting-panel>
   `,
   defaultEvent: {
     click: 'click'
   }
+};
+
+const getElementPath = function (elem) {
+    const path = [];
+    if(elem === null) return path;
+    path.push(elem);
+    while(elem.parentNode !== null) {
+      elem = elem.parentNode;
+      path.push(elem);
+    };
+    return path;
 };
 
 export default class Setting extends Base {
@@ -43,17 +46,26 @@ export default class Setting extends Base {
     this.$dom = $(this.$dom);
     this.$dom.addClass('chimee-flex-component');
 
+    this.$btn = this.$dom.find('chimee-setting-btn');
+    this.$panel = this.$dom.find('chimee-setting-panel');
   }
-
-
 
   // 播放下一集信息
   setting(){
-
+    
   }
 
   click (e) {
-    this.setting();
-    // this.parent.$emit('playNextVideo');
+    const path = e.path || getElementPath(e.target);
+
+    // 点击按钮
+    if(path.indexOf(this.$btn[0]) !== -1) {
+        if(hasClassName(this.$dom[0], 'on')) {
+            removeClassName(this.$dom[0], 'on')
+        } else {
+            addClassName(this.$dom[0], 'on')
+        }
+        return;
+    }
   }
 }

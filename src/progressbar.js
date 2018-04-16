@@ -12,18 +12,11 @@ const defaultOption = {
         <chimee-progressbar-ball></chimee-progressbar-ball>
       </chimee-progressbar-all>
       
-      <chimee-progressbar-tip></chimee-progressbar-tip>
-
       <!-- 时间轴预览功能 -->
-      <chimee-progressbar-btn></chimee-progressbar-btn>
       <chimee-progressbar-preview> 
-          <p class="pic"> 
-              <i class="pic-s"></i> 
-              <i class="pic-time">01:29</i> 
-          </p> 
-          <span class="arr"></span> 
+        <chimee-progressbar-tip></chimee-progressbar-tip>
       </chimee-progressbar-preview>
-
+      <chimee-progressbar-btn></chimee-progressbar-btn>
 
     </chimee-progressbar-wrap>
   `
@@ -43,7 +36,7 @@ export default class ProgressBar extends Base {
     this.$wrap = this.$dom.find('chimee-progressbar-wrap');
     this.$buffer = this.$dom.find('chimee-progressbar-buffer');
     this.$all = this.$dom.find('chimee-progressbar-all');
-    this.$tip = this.$dom.find('chimee-progressbar-tip');
+    this.$tip = this.$dom.find('chimee-progressbar-preview');
     this.$track = this.$dom.find('chimee-progressbar-track');
     this.$line = this.$dom.find('.chimee-progressbar-line');
     this.$ball = this.$dom.find('chimee-progressbar-ball');
@@ -182,7 +175,7 @@ export default class ProgressBar extends Base {
     let left = e.offsetX - this.$tip[0].offsetWidth / 2;
     const leftBound = this.$wrap[0].offsetWidth - this.$tip[0].offsetWidth;
     left = left < 0 ? 0 : left > leftBound ? leftBound : left;
-    this.$tip.text(tipContent);
+    this.$tip.find('chimee-progressbar-tip').text(tipContent);
     this.$tip.css('display', 'inline-block');
     this.$tip.css('left', `${left}px`);
   }

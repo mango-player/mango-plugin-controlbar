@@ -1,4 +1,4 @@
-import {deepAssign, isObject, addClassName, removeClassName, setStyle, $} from 'mango-helper';
+import {deepAssign, isObject, hasClassName, addClassName, removeClassName, setStyle, $} from 'mango-helper';
 import Base from './base.js';
 
 /**
@@ -12,13 +12,6 @@ const defaultOption = {
     <chimee-clarity-text>标清</chimee-clarity-text>
     <chimee-clarity-list>
       <ul></ul>
-      <div class="chimee-clarity-list-arrow">
-        <svg viewBox="0 0 115 6"  version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-          <g id="Group-3-Copy" fill="#57B0F6">
-            <polygon id="Path-2" points="0.0205224145 0.0374249581 0.0205224145 2.12677903 53.9230712 2.12677903 57.1127727 5.3468462 60.2283558 2.12677903 113.820935 2.12677903 113.820935 0.0374249581"></polygon>
-          </g>
-        </svg>
-      </div>
     </chimee-clarity-list>
   `,
   defaultEvent: {
@@ -39,7 +32,7 @@ export default class Clarity extends Base {
   init () {
     super.create();
     addClassName(this.$dom, 'chimee-flex-component');
-
+    
     this.$text = $(this.$dom).find('chimee-clarity-text');
     this.$list = $(this.$dom).find('chimee-clarity-list');
     this.$listUl = this.$list.find('ul');
@@ -73,6 +66,15 @@ export default class Clarity extends Base {
 
   click (e) {
     const elem = e.target;
+
+    if(elem.tagName === 'CHIMEE-CLARITY-TEXT') {
+      if(hasClassName(this.$dom, 'on')) {
+        removeClassName(this.$dom, 'on')
+      } else {
+        addClassName(this.$dom, 'on')
+      }
+      return;
+    }
     if(elem.tagName === 'LI') {
       const url = elem.getAttribute('data-url') || '';
       this.switchClarity(url).then(() => {
