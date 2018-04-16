@@ -9,7 +9,7 @@ const defaultOption = {
   tag: 'chimee-clarity',
   width: '2em',
   html: `
-    <chimee-clarity-text></chimee-clarity-text>
+    <chimee-clarity-text>标清</chimee-clarity-text>
     <chimee-clarity-list>
       <ul></ul>
       <div class="chimee-clarity-list-arrow">
@@ -43,9 +43,6 @@ export default class Clarity extends Base {
     this.$text = $(this.$dom).find('chimee-clarity-text');
     this.$list = $(this.$dom).find('chimee-clarity-list');
     this.$listUl = this.$list.find('ul');
-
-    // 用户自定义配置
-    this.option.width && setStyle(this.$dom, 'width', this.option.width);
 
     this.initTextList();
   }

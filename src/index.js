@@ -41,8 +41,8 @@ const chimeeControl = {
   el: 'chimee-control',
   data: {
     children: {},
-    show: false,
-    adlock: true,
+    show: true,
+    adlock: false,
     disabled: true
   },
   level: 99,
@@ -218,17 +218,17 @@ const chimeeControl = {
       this.children.progressTime && this.children.progressTime.updatePass();
     },
     _hideItself () {
-      window.clearTimeout(this.timeId);
-      this.timeId = setTimeout(() => {
-        let bottom = this.$wrap.offsetHeight;
-        bottom = this.children.progressBar ? this.children.progressBar.$wrap[0].offsetTop - bottom : -bottom;
-        setStyle(this.$wrap, {
-          bottom: bottom + 'px'
-        });
-        setStyle(this.$dom, {
-          visibility: 'hidden'
-        });
-      }, this.config.hideBarTime);
+      // window.clearTimeout(this.timeId);
+      // this.timeId = setTimeout(() => {
+      //   let bottom = this.$wrap.offsetHeight;
+      //   bottom = this.children.progressBar ? this.children.progressBar.$wrap[0].offsetTop - bottom : -bottom;
+      //   setStyle(this.$wrap, {
+      //     bottom: bottom + 'px'
+      //   });
+      //   setStyle(this.$dom, {
+      //     visibility: 'hidden'
+      //   });
+      // }, this.config.hideBarTime);
     },
     _showItself () {
       window.clearTimeout(this.timeId);
