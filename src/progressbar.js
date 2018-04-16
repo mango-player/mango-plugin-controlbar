@@ -20,6 +20,7 @@ const defaultOption = {
         <chimee-progressbar-preview-line></chimee-progressbar-preview-line>
       </chimee-progressbar-preview-btn>
 
+      <chimee-progressbar-keypoint></chimee-progressbar-keypoint>
     </chimee-progressbar-wrap>
   `
 };
@@ -118,11 +119,47 @@ export default class ProgressBar extends Base {
   // 设置关键点
   initKeyPoints(points) {
     this.keyPoints = points;
+    this.createPoints();
   }
 
   // 设置关键帧
   initFrames(frames) {
     this.keyframes = frames;
+  }
+
+  createPoints() {
+    this.skipStartTime = Number(this.keyPoints.start.split("|")[0]) || 0;
+    this.skipEndTime = Number(this.keyPoints.end.split("|")[0]) || 0;
+
+    // 跳过片头打点
+    if (this.skipStartTime > 0 && this.skipStartTime < this.duration) {
+      this.createPoint(this.skipStartTime)
+    }
+
+    // 跳过片尾打点
+    if (this.skipEndTime > 0 && this.skipEndTime < this.duration) {
+      this.createPoint(this.skipEndTime)
+    }
+
+    // 中间内容打点
+    this.points = this.keyPoints.content.map((item) => {
+      let timeAndTitle = item.split('|')
+      self.createPoint(timeAndTitle[0], timeAndTitle[1])
+      return {
+        time: timeAndTitle[0],
+        title: timeAndTitle[1]
+      }
+    })
+  }
+
+  // 创建时间轴打点数据
+  createPoint(time, title) {
+    let left, $point;
+    left = Math.floor(time / this.duration * 100)
+    $point = `<chimee-progressbar-keypoint 
+          data-title=${title} data-time=${time} style="left:${left}%">
+      </chimee-progressbar-keypoint>`
+    this.$wrap.innerHtml($point)
   }
 
   addWrapEvent() {
@@ -212,7 +249,7 @@ export default class ProgressBar extends Base {
   tipShow(e) {
 
     // 如果没有关键帧数据，则不显示
-    if(!this.keyframes) {
+    if (!this.keyframes) {
       return;
     }
 

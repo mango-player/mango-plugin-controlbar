@@ -203,6 +203,19 @@ chimee-progressbar-ball {
   pointer-events: none;
 }
 
+chimee-progressbar-keypoint {
+  position: absolute;
+  right: -4px;
+  top: -1px;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  display: block;
+  background: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
 chimee-progressbar-preview {
   position: absolute;
   bottom: 40px;
