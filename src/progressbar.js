@@ -16,7 +16,9 @@ const defaultOption = {
       <chimee-progressbar-preview> 
         <chimee-progressbar-tip></chimee-progressbar-tip>
       </chimee-progressbar-preview>
-      <chimee-progressbar-btn></chimee-progressbar-btn>
+      <chimee-progressbar-preview-btn>
+        <chimee-progressbar-preview-line></chimee-progressbar-preview-line>
+      </chimee-progressbar-preview-btn>
 
     </chimee-progressbar-wrap>
   `
@@ -40,6 +42,7 @@ export default class ProgressBar extends Base {
     this.$track = this.$dom.find('chimee-progressbar-track');
     this.$line = this.$dom.find('.chimee-progressbar-line');
     this.$ball = this.$dom.find('chimee-progressbar-ball');
+    this.$previewBtn = this.$dom.find('chimee-progressbar-preview-btn');
     this.$dom.addClass('chimee-flex-component');
 
     // css 配置
@@ -167,6 +170,7 @@ export default class ProgressBar extends Base {
   tipShow(e) {
     if (e.target === this.$tip[0] || e.target === this.$ball[0]) {
       this.$tip.css('display', 'none');
+      this.$previewBtn.css('display', 'none');
       return;
     };
     let time = e.offsetX / this.$wrap[0].offsetWidth * this.parent.duration;
@@ -176,11 +180,16 @@ export default class ProgressBar extends Base {
     const leftBound = this.$wrap[0].offsetWidth - this.$tip[0].offsetWidth;
     left = left < 0 ? 0 : left > leftBound ? leftBound : left;
     this.$tip.find('chimee-progressbar-tip').text(tipContent);
+
     this.$tip.css('display', 'inline-block');
     this.$tip.css('left', `${left}px`);
+
+    this.$previewBtn.css('display', 'inline-block');
+    this.$previewBtn.css('left', `${e.offsetX}px`);
   }
   @autobind
   tipEnd() {
     this.$tip.css('display', 'none');
+    this.$previewBtn.css('display', 'none');
   }
 }

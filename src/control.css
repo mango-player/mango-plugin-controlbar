@@ -41,6 +41,7 @@ chimee-volume-state-high,
 chimee-control-state-pause,
 chimee-control-state-play,
 chimee-progressbar-preview,
+chimee-progressbar-preview-btn,
 chimee-screen-full,
 chimee-clarity-list,
 chimee-screen-small {
@@ -199,7 +200,7 @@ chimee-progressbar-ball {
 
 chimee-progressbar-preview {
   position: absolute;
-  bottom: 30px;
+  bottom: 40px;
   width: 130px;
   height: 74px;
   background: #212121;
@@ -215,6 +216,25 @@ chimee-progressbar-tip {
   bottom: 0px;
   right: 6px;
   color: #fff;
+}
+
+chimee-progressbar-preview-line {
+  position: absolute;
+  bottom: 16px;
+  width: 1px;
+  height: 13px;
+  background: #fff;
+  opacity: 0.8;
+}
+
+chimee-progressbar-preview-btn {
+  position: absolute;
+  bottom: 0px;
+  width: 3px;
+  height: 12px;
+  background: #fff;
+  opacity: 0.8;
+  pointer-events: none;
 }
 
 /* 音量控制 */
