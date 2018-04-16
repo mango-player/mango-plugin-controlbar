@@ -84,6 +84,18 @@ const chimeeControl = {
     }
   },
   events: {
+    // cms 一层接口成功
+    cmsDataComplete(cmsData){
+      this.children.progressBar.initKeyPoints(cmsData.points);
+      this.children.progressBar.initFrames(cmsData.frames);
+    },
+
+    // 下一集信息返回的时候
+    nextVideoInfo(nextvideoinfo){
+      this.children.playNext.setNextVideoInfo(nextvideoinfo)
+    },
+
+
     // 调度信息获取的时候设置清晰度列表
     dispactherDataComplete(data){
       this.children.clarity.initTextList(data.stream)

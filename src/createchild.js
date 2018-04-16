@@ -1,5 +1,6 @@
 import Component from './component.js';
 import Play from './play.js';
+import PlayNext from './next.js';
 import Volume from './volume.js';
 import ProgressBar from './progressbar.js';
 import ProgressTime from './progresstime.js';
@@ -18,6 +19,7 @@ function hundleChildren (plugin) {
       screen: true, // 全屏控制
     } : {
       play: true, // 底部播放暂停按钮
+      playNext: true, // 播放下一集
       progressTime: true, // 播放时间
       progressBar: true, // 播放进度控制条
       volume: true, // 声音控制
@@ -53,6 +55,11 @@ export function createChild (plugin) {
         case 'play':
           if(childConfig.play) {
             children.play = new Play(plugin, childConfig.play);
+          }
+          break;
+        case 'playNext':
+          if(childConfig.playNext) {
+            children.playNext = new PlayNext(plugin, childConfig.playNext);
           }
           break;
         case 'progressTime':

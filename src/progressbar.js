@@ -1,5 +1,5 @@
-import {deepAssign, isObject, formatTime, $, addEvent, removeEvent, setStyle} from 'mango-helper';
-import {autobind} from 'toxic-decorators';
+import { deepAssign, isObject, formatTime, $, addEvent, removeEvent, setStyle } from 'mango-helper';
+import { autobind } from 'toxic-decorators';
 import Base from './base.js';
 
 const defaultOption = {
@@ -11,20 +11,33 @@ const defaultOption = {
       <chimee-progressbar-all class="chimee-progressbar-line">
         <chimee-progressbar-ball></chimee-progressbar-ball>
       </chimee-progressbar-all>
+      
       <chimee-progressbar-tip></chimee-progressbar-tip>
+
+      <!-- 时间轴预览功能 -->
+      <chimee-progressbar-btn></chimee-progressbar-btn>
+      <chimee-progressbar-preview> 
+          <p class="pic"> 
+              <i class="pic-s"></i> 
+              <i class="pic-time">01:29</i> 
+          </p> 
+          <span class="arr"></span> 
+      </chimee-progressbar-preview>
+
+
     </chimee-progressbar-wrap>
   `
 };
 
 export default class ProgressBar extends Base {
-  constructor (parent, option) {
+  constructor(parent, option) {
     super(parent);
     this.option = deepAssign(defaultOption, isObject(option) ? option : {});
     this.visiable = option !== false;
     this.init();
   }
 
-  init () {
+  init() {
     super.create();
     this.$dom = $(this.$dom);
     this.$wrap = this.$dom.find('chimee-progressbar-wrap');
@@ -38,11 +51,11 @@ export default class ProgressBar extends Base {
 
     // css 配置
     !this.visiable && this.$dom.css('visibility', 'hidden');
-     // this.$line.css({
+    // this.$line.css({
     //   top: this.$wrap.
     // });
     // 进度条居中布局，还是在上方
-    if(this.option.layout === 'top') {
+    if (this.option.layout === 'top') {
       this.$dom.addClass('progressbar-layout-top');
       this.$wrap.css({
         // left: -this.$dom[0].offsetLeft + 'px',
@@ -53,21 +66,34 @@ export default class ProgressBar extends Base {
       //   top: this.$ball[0].offsetHeight + 'px'
       // })
       setStyle(this.parent.$wrap, 'paddingTop', this.$ball[0].offsetHeight + 'px');
-  }
+    }
     this.addWrapEvent();
   }
-  destroy () {
+
+  destroy() {
     this.removeWrapEvent();
     // 解绑全屏监听事件
     this.watch_screen && this.watch_screen();
     super.destroy();
   }
-  addWrapEvent () {
+
+  // 设置关键点
+  initKeyPoints(points){
+
+  }
+
+  // 设置关键帧
+  initFrames(frames){
+
+  }
+
+  addWrapEvent() {
     this.$wrap.on('mousedown', this.mousedown);
     this.$wrap.on('mousemove', this.tipShow);
     this.$wrap.on('mouseleave', this.tipEnd);
   }
-  removeWrapEvent () {
+
+  removeWrapEvent() {
     this.$wrap.off('mousedown', this.mousedown);
     this.$wrap.off('mousemove', this.tipShow);
     this.$wrap.off('mouseleave', this.tipEnd);
@@ -76,11 +102,11 @@ export default class ProgressBar extends Base {
   /**
    * 缓存进度条更新 progress 事件
    */
-  progress () {
+  progress() {
     let buffer = 0;
-    try{
+    try {
       buffer = this.parent.buffered.end(0);
-    }catch (e) {}
+    } catch (e) { }
     const bufferWidth = buffer / this.parent.duration * 100 + '%';
     this.$buffer.css('width', bufferWidth);
   }
@@ -88,20 +114,22 @@ export default class ProgressBar extends Base {
   /**
    * requestAnimationFrame 来更新进度条, timeupdate 事件
    */
-  update () {
+  update() {
     // const allWidth = this.$wrap[0].offsetWidth - this.$ball[0].offsetWidth;
     const time = this._currentTime !== undefined ? this._currentTime : this.parent.currentTime;
     const timePer = time ? time / this.parent.duration : 0;
     // const timeWidth = timePer * allWidth;
     this.$all.css('width', `calc(${timePer * 100}% - ${this.$ball[0].offsetWidth / 2}px`);
   }
+
+
   @autobind
-  mousedown (e) {
+  mousedown(e) {
     // const ballRect = this.$ball[0].getClientRects()[0];
     // const ballLeft = ballRect.left;
     // const ballRight = ballRect.left + ballRect.width;
     // this.inBall = e.clientX <= ballRight && e.clientX >= ballLeft;
-    if(e.target === this.$tip[0]) return;
+    if (e.target === this.$tip[0]) return;
     this._currentTime = e.offsetX / this.$wrap[0].offsetWidth * this.parent.duration;
     // if(!this.inBall) this.update();
     this.startX = e.clientX;
@@ -116,7 +144,7 @@ export default class ProgressBar extends Base {
    * @param {EventObject} e 鼠标事件
    */
   @autobind
-  draging (e) {
+  draging(e) {
     this.endX = e.clientX;
     const dragTime = (this.endX - this.startX) / this.$wrap[0].offsetWidth * this.parent.duration;
     const dragAfterTime = +(this.startTime + dragTime).toFixed(2);
@@ -128,7 +156,7 @@ export default class ProgressBar extends Base {
    * 结束拖拽
    */
   @autobind
-  dragEnd () {
+  dragEnd() {
     this.update();
     this.startX = 0;
     this.startTime = 0;
@@ -143,8 +171,8 @@ export default class ProgressBar extends Base {
   }
 
   @autobind
-  tipShow (e) {
-    if(e.target === this.$tip[0] || e.target === this.$ball[0]) {
+  tipShow(e) {
+    if (e.target === this.$tip[0] || e.target === this.$ball[0]) {
       this.$tip.css('display', 'none');
       return;
     };
@@ -159,7 +187,7 @@ export default class ProgressBar extends Base {
     this.$tip.css('left', `${left}px`);
   }
   @autobind
-  tipEnd () {
+  tipEnd() {
     this.$tip.css('display', 'none');
   }
 }
