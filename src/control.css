@@ -142,6 +142,11 @@ chimee-progresstime-total {
   display: inline;
 }
 
+chimee-progresstime-total span{
+  display: inline-block;
+  margin: 0 4px;
+}
+
 /* 播放器控制条 */
 chimee-progressbar.chimee-flex-component {
   position: absolute;

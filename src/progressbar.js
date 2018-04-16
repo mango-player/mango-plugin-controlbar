@@ -24,6 +24,44 @@ const defaultOption = {
   `
 };
 
+/**
+ * @desc 获取当前时间点的视频截图信息
+ * @param {Object} frameInfo 视频截图信息
+ * @param {Number} time 当前的视频时间 单位为秒
+ * @param {Object} 截图信息 {index, image, x, y}
+ */
+const getFrameImage = function (frameInfo, time) {
+  let index, image, x, y, seconds, idx, len, remain;
+  let frameWith = 130, frameHeight = 74, frameTotal = 100;
+  if (frameInfo.second && frameInfo.second[0] && frameInfo.images) {
+    seconds = frameInfo.second.join('|').split('|');
+    len = seconds.length
+    index = len - 1
+    for (let i = 0; i < len - 1; i++) {
+      if (time >= seconds[i] && time < seconds[i + 1]) {
+        index = i;
+        break
+      }
+    }
+    // 计算图片位置
+    idx = Math.floor(index / frameTotal)
+    remain = index % frameTotal
+    image = frameInfo.images[idx]
+    x = (remain % 10) * frameWith
+    y = Math.floor(remain / 10) * frameHeight
+    return {
+      idx,
+      index,
+      image,
+      x,
+      y
+    }
+  } else {
+    return null;
+  }
+
+}
+
 export default class ProgressBar extends Base {
   constructor(parent, option) {
     super(parent);
@@ -34,6 +72,10 @@ export default class ProgressBar extends Base {
 
   init() {
     super.create();
+
+    this.keyPoints = null; // 关键打点数据
+    this.keyframes = null; // 关键帧图片数据
+
     this.$dom = $(this.$dom);
     this.$wrap = this.$dom.find('chimee-progressbar-wrap');
     this.$buffer = this.$dom.find('chimee-progressbar-buffer');
@@ -74,13 +116,13 @@ export default class ProgressBar extends Base {
   }
 
   // 设置关键点
-  initKeyPoints(points){
-
+  initKeyPoints(points) {
+    this.keyPoints = points;
   }
 
   // 设置关键帧
-  initFrames(frames){
-
+  initFrames(frames) {
+    this.keyframes = frames;
   }
 
   addWrapEvent() {
@@ -168,6 +210,12 @@ export default class ProgressBar extends Base {
 
   @autobind
   tipShow(e) {
+
+    // 如果没有关键帧数据，则不显示
+    if(!this.keyframes) {
+      return;
+    }
+
     if (e.target === this.$tip[0] || e.target === this.$ball[0]) {
       this.$tip.css('display', 'none');
       this.$previewBtn.css('display', 'none');
@@ -176,11 +224,15 @@ export default class ProgressBar extends Base {
     let time = e.offsetX / this.$wrap[0].offsetWidth * this.parent.duration;
     time = time < 0 ? 0 : time > this.parent.duration ? this.parent.duration : time;
     const tipContent = formatTime(time);
+    const frameInfo = getFrameImage(this.keyframes, time);
+
     let left = e.offsetX - this.$tip[0].offsetWidth / 2;
     const leftBound = this.$wrap[0].offsetWidth - this.$tip[0].offsetWidth;
     left = left < 0 ? 0 : left > leftBound ? leftBound : left;
     this.$tip.find('chimee-progressbar-tip').text(tipContent);
 
+    this.$tip.css('backgroundImage', `url(${frameInfo.image})`);
+    this.$tip.css('backgroundPosition', `-${frameInfo.x}px -${frameInfo.y}px`);
     this.$tip.css('display', 'inline-block');
     this.$tip.css('left', `${left}px`);
 
