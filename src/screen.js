@@ -10,29 +10,13 @@ const defaultOption = {
   tag: 'chimee-screen',
   html: `
     <chimee-screen-full>
-      <svg viewBox="0 0 67 66" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-          <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
-          <desc>Created with Sketch.</desc>
-          <defs></defs>
-          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <g id="screen-small" transform="translate(33.756308, 32.621867) rotate(45.000000) translate(-33.756308, -32.621867) translate(18.756308, -10.378133)" fill="#FFFFFF">
-                  <polygon id="Path" transform="translate(14.967695, 66.389245) rotate(180.000000) translate(-14.967695, -66.389245) " points="11.5190786 46.9431778 11.7210093 70.7913773 0.565180527 70.7913773 15.4674455 85.8353125 29.3702096 70.7913773 18.5573247 70.7702156 18.5573247 46.9431778"></polygon>
-                  <polygon id="Path" points="11.5190786 0.274130278 11.7210093 24.1223298 0.565180527 24.1223298 15.4674455 39.1662649 29.3702096 24.1223298 18.5573247 24.1011681 18.5573247 0.274130278"></polygon>
-              </g>
-          </g>
+      <svg id="pad-zoom-s" viewBox="0 0 15.9 15.9" width="100%" height="100%">
+        <path d="M14.9 15.9a1 1 0 0 1-.7-.3l-3.8-3.8v1.6a1 1 0 0 1-2 0v-4a1 1 0 0 1 1-1h4a1 1 0 0 1 0 2h-1.6l3.8 3.8a1 1 0 0 1-.7 1.7zM6.5 7.5h-4a1 1 0 0 1 0-2h1.6L.3 1.7A1 1 0 0 1 1.7.3l3.8 3.8V2.5a1 1 0 0 1 2 0v4a1 1 0 0 1-1 1z"></path>
       </svg>
     </chimee-screen-full>
     <chimee-screen-small>
-      <svg viewBox="0 0 61 62" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-        <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
-        <desc>Created with Sketch.</desc>
-        <defs></defs>
-        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-            <g id="Group" transform="translate(30.756308, 30.621867) rotate(45.000000) translate(-30.756308, -30.621867) translate(15.756308, -12.378133)" fill="#FFFFFF">
-                <polygon id="Path" points="11.5190786 46.9431778 11.7210093 70.7913773 0.565180527 70.7913773 15.4674455 85.8353125 29.3702096 70.7913773 18.5573247 70.7702156 18.5573247 46.9431778"></polygon>
-                <polygon id="Path" transform="translate(14.967695, 19.720198) rotate(180.000000) translate(-14.967695, -19.720198) " points="11.5190786 0.274130278 11.7210093 24.1223298 0.565180527 24.1223298 15.4674455 39.1662649 29.3702096 24.1223298 18.5573247 24.1011681 18.5573247 0.274130278"></polygon>
-            </g>
-        </g>
+      <svg id="pad-zoom" viewBox="0 0 15 15" width="100%" height="100%">
+        <path class="cls-1" d="M14 15h-4a1 1 0 0 1 0-2h1.6L8.3 9.7a1 1 0 0 1 1.4-1.5l3.3 3.4V10a1 1 0 0 1 2 0v4a1 1 0 0 1-1 1z"></path><path d="M6 7a1 1 0 0 1-.7-.3L2 3.4V5a1 1 0 0 1-2 0V1a1 1 0 0 1 1-1h4a1 1 0 0 1 0 2H3.4l3.3 3.2A1 1 0 0 1 6 7z"></path>
       </svg>
     </chimee-screen-small>
   `,

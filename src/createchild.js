@@ -4,6 +4,7 @@ import PlayNext from './next.js';
 import Volume from './volume.js';
 import ProgressBar from './progressbar.js';
 import ProgressTime from './progresstime.js';
+import Setting from './setting.js';
 import Screen from './screen.js';
 import Clarity from './clarity.js';
 
@@ -24,6 +25,7 @@ function hundleChildren (plugin) {
       progressBar: true, // 播放进度控制条
       volume: true, // 声音控制
       clarity: true, // 清晰度控制
+      setting: true, // 设置按钮
       screen: true, // 全屏控制
     };
   }else{
@@ -73,6 +75,11 @@ export function createChild (plugin) {
         case 'volume':
           if(childConfig.volume) {
             children.volume = new Volume(plugin, childConfig.volume);
+          }
+          break;
+        case 'setting':
+          if(childConfig.setting) {
+            children.setting = new Setting(plugin, childConfig.setting);
           }
           break;
         case 'screen':

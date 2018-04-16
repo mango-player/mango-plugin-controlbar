@@ -8,29 +8,17 @@ import Base from './base.js';
 const defaultOption = {
   tag: 'chimee-control-state',
   html: `
-    <chimee-control-state-play></chimee-control-state-play>
-    <chimee-control-state-pause></chimee-control-state-pause>
-  `,
-  animate: {
-    icon: `
-      <svg viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-        <g fill="#ffffff" stroke="#ffffff">
-          <path class="left"></path>
-          <path class="right"></path>
-        </g>
+    <chimee-control-state-play>
+      <svg id="pad-play" viewBox="0 0 14 14.8" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path d="M14 7.3a.9.9 0 0 0-.7-1L3 .9 1.5.2Q-.1-.5 0 1.6v12.1q.1 1 .6 1.2a2.2 2.2 0 0 0 1.7-.5l11.1-6.2q.7-.4.6-.9z"></path>
       </svg>
-    `,
-    path: {
-      play: {
-        left: 'M0.921875,0.265625L0.921875,197.074852L95.7890625,149L96.2929688,49Z',
-        right: 'M90.3142151,45.9315226L90.3142151,151.774115L201.600944,99.9938782L201.600944,98.0237571Z'
-      },
-      pause: {
-        left: 'M0.921875,1.265625L0.921875,198.074852L79.3611677,198.074852L79.3611677,0.258923126Z',
-        right: 'M126.921875,1.265625L126.921875,198.074852L205.361168,198.074852L205.361168,0.258923126Z'
-      }
-    }
-  },
+    </chimee-control-state-play>
+    <chimee-control-state-pause>
+      <svg id="pad-pause" viewBox="0 0 14 16" width="100%" height="100%"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path d="M5 16V0H0v16h5M9 0h5v16H9z"></path>
+      </svg>
+    </chimee-control-state-pause>
+  `,
   defaultEvent: {
     click: 'click'
   }
@@ -49,20 +37,6 @@ export default class Play extends Base {
     super.create();
     this.$dom = $(this.$dom);
     this.$dom.addClass('chimee-flex-component');
-
-    // 判断是否是默认或者用户提供 icon
-    if(this.option.icon && this.option.icon.play && this.option.icon.pause) {
-      this.$play = this.$dom.find('chimee-control-state-play');
-      this.$pause = this.$dom.find('chimee-control-state-pause');
-      this.$play.html(this.option.icon.play);
-      this.$pause.html(this.option.icon.pause);
-    }else if(!this.option.bitmap) {
-      this.animate = true;
-      this.option.animate.path = this.option.path ? this.option.path : this.option.animate.path;
-      this.$dom.html(this.option.animate.icon);
-      this.$left = this.$dom.find('.left');
-      this.$right = this.$dom.find('.right');
-    }
     this.changeState('pause');
   }
 
@@ -71,18 +45,6 @@ export default class Play extends Base {
     this.state = state;
     addClassName(this.parent.$dom, nextState);
     removeClassName(this.parent.$dom, state);
-    this.animate && this.setPath(nextState);
-  }
-
-  setPath (state) {
-    const path = this.option.animate.path;
-    if(state === 'play') {
-      this.$left.attr('d', path.play.left);
-      this.$right.attr('d', path.play.right);
-    }else{
-      this.$left.attr('d', path.pause.left);
-      this.$right.attr('d', path.pause.right);
-    }
   }
 
   click (e) {

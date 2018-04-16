@@ -22,8 +22,9 @@ video:focus {
   --trackColor: #4c4c4c;
 }
 
+
 /* 全局默认样式 */
-.chimee-flex-component svg g {
+.chimee-flex-component svg g, .chimee-flex-component svg path{
   fill: #fff;
   stroke: #fff;
 }
@@ -435,3 +436,7 @@ chimee-clarity-list-arrow {
   bottom: 1.5em;
   width: 100%;
 }
+
+
+
+
