@@ -86,7 +86,7 @@ const chimeeControl = {
   events: {
     // cms 一层接口成功
     cmsDataComplete(cmsData){
-      this.children.progressBar.initKeyPoints(cmsData.points);
+      this.children.progressBar.initKeyPoints(cmsData.points, cmsData.info.duration);
       this.children.progressBar.initFrames(cmsData.frame);
     },
 

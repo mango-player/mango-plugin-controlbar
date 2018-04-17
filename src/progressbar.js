@@ -20,7 +20,8 @@ const defaultOption = {
         <chimee-progressbar-preview-line></chimee-progressbar-preview-line>
       </chimee-progressbar-preview-btn>
 
-      <chimee-progressbar-keypoint></chimee-progressbar-keypoint>
+      <!-- 打点数据功能 -->
+      <chimee-progressbar-keypoints></chimee-progressbar-keypoints>
     </chimee-progressbar-wrap>
   `
 };
@@ -86,6 +87,7 @@ export default class ProgressBar extends Base {
     this.$line = this.$dom.find('.chimee-progressbar-line');
     this.$ball = this.$dom.find('chimee-progressbar-ball');
     this.$previewBtn = this.$dom.find('chimee-progressbar-preview-btn');
+    this.$points = this.$dom.find('chimee-progressbar-keypoints');
     this.$dom.addClass('chimee-flex-component');
 
     // css 配置
@@ -117,8 +119,9 @@ export default class ProgressBar extends Base {
   }
 
   // 设置关键点
-  initKeyPoints(points) {
+  initKeyPoints(points, duration) {
     this.keyPoints = points;
+    this.duration = duration;
     this.createPoints();
   }
 
@@ -132,19 +135,20 @@ export default class ProgressBar extends Base {
     this.skipEndTime = Number(this.keyPoints.end.split("|")[0]) || 0;
 
     // 跳过片头打点
+    console.log(this.skipStartTime , this.duration)
     if (this.skipStartTime > 0 && this.skipStartTime < this.duration) {
       this.createPoint(this.skipStartTime)
     }
 
     // 跳过片尾打点
-    if (this.skipEndTime > 0 && this.skipEndTime < this.duration) {
+    if (this.skipEndTime > 0 && this.skipStartTime < this.duration) {
       this.createPoint(this.skipEndTime)
     }
 
     // 中间内容打点
     this.points = this.keyPoints.content.map((item) => {
       let timeAndTitle = item.split('|')
-      self.createPoint(timeAndTitle[0], timeAndTitle[1])
+      this.createPoint(timeAndTitle[0], timeAndTitle[1])
       return {
         time: timeAndTitle[0],
         title: timeAndTitle[1]
@@ -156,10 +160,10 @@ export default class ProgressBar extends Base {
   createPoint(time, title) {
     let left, $point;
     left = Math.floor(time / this.duration * 100)
-    $point = `<chimee-progressbar-keypoint 
+    $point = $(`<chimee-progressbar-keypoint 
           data-title=${title} data-time=${time} style="left:${left}%">
-      </chimee-progressbar-keypoint>`
-    this.$wrap.innerHtml($point)
+      </chimee-progressbar-keypoint>`)
+    this.$points.append($point)
   }
 
   addWrapEvent() {
