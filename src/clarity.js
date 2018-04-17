@@ -2,7 +2,7 @@ import {deepAssign, isObject, hasClassName, addClassName, removeClassName, setSt
 import Base from './base.js';
 
 /**
- * play 配置
+ * 清晰度 配置
  */
 
 const defaultOption = {
@@ -14,11 +14,13 @@ const defaultOption = {
       <ul></ul>
     </chimee-clarity-list>
   `,
+  vipIcon: `<svg id="pad-vip" viewBox="0 0 16 14.5" width="100%" height="100%"><path d="M.2 3.4l-.2.4h4.2L2.2.4l-.4.4L.2 3.4M9.9 3.8L12 0H3.6l2.3 3.8h4M15.7 6l.3-.4H.1l.3.4L7 14.1h.1a1.5 1.5 0 0 0 1.1.4l.8-.2L15.7 6M15.8 3.8l-.2-.4L13.9.8l-.4-.4-2 3.5z"></path></svg>`,
   alignRight: true,
   defaultEvent: {
     click: 'click'
   },
   list: [],  // 清晰度列表
+  selected: 0, // 默认选择
   duration: 10,
   increment: 1
 };
@@ -41,28 +43,36 @@ export default class Clarity extends Base {
     this.initTextList();
   }
 
-  initTextList (clarityList) {
+  initTextList (clarityList, selected) {
     var items = clarityList || this.option.list
-    this.option.list = items;
+    this.option.list = items.reverse();
     // 设置默认状态
-    if(items.length > 0) {
+    if(items.length > 0 && selected) {
       this.$listUl.html('');
-      this.$text.html(items[0].name)
+      this.$text.html(selected.name)
     }
 
     // 设置选项
     items.forEach(item => {
+
       const li = $(document.createElement('li'));
-      li.attr('data-url', item.src);
-      li.text(item.name);
-      if(item.src === this.parent.$videoConfig.src) {
+      const icon = '';
+      li.attr('data-def', item.def);
+      li.attr('data-name', item.name);
+
+      if( item.vip != 0) {
+        icon = this.option.vipIcon;
+        li.addClass('vip');
+      }
+
+      li.html(item.name + icon);
+
+      if(item.def == selected.def) {
         this.$text.text(item.name);
         li.addClass('active');
       }
       this.$listUl.append(li);
     });
-
-    
   }
 
   click (e) {
@@ -77,31 +87,23 @@ export default class Clarity extends Base {
       return;
     }
     if(elem.tagName === 'LI') {
-      const url = elem.getAttribute('data-url') || '';
-      this.switchClarity(url).then(() => {
-        this.loadOption = undefined;
-        Array.from(elem.parentElement.children).map(item => {
-          removeClassName(item, 'active');
-        });
-        addClassName(e.target, 'active');
-        this.$text.text(e.target.textContent);
-      }).catch((e) => {
-        console.warn(e);
-      });;
+      const def = elem.getAttribute('data-def') || '';
+      const name = elem.getAttribute('data-name') || '';
+      
+      // 设置状态
+      this.$listUl.find('li').removeClass('active');
+      $(elem).addClass('active');
+      this.$text.text(name);
+      removeClassName(this.$dom, 'on')
+
+      // 发送请求事件
+      this.parent.emit('switchClarity', {def})
     }
   }
 
-  switchClarity (url) {
-    if (this.loadOption) {
-      this.loadOption.abort = true;
+  clarityChanged(data) {
+    if(data.error) {
+      console.log('切换清晰度失败')
     }
-    this.loadOption = {
-      duration: this.option.duration,
-      repeatTimes: 3,
-      immediate: true,
-      increment: this.option.increment
-    };
-    return this.parent.$silentLoad(url, this.loadOption);
   }
-
 }

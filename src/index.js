@@ -103,8 +103,12 @@ const chimeeControl = {
 
     // 调度信息获取的时候设置清晰度列表
     dispactherDataComplete(data){
-      this.children.clarity.initTextList(data.stream)
+      this.children.clarity.initTextList(data.stream, data.stream[0])
     },
+
+    clarityChanged(data) {
+      this.children.clarity.clarityChanged(data)
+    }
 
     frontAdBegin(){
       console.log('front ad begin')
