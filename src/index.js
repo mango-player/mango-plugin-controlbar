@@ -70,8 +70,13 @@ const chimeeControl = {
     this.config = isObject(this.$config) ? deepAssign(defaultConfig, this.$config) : defaultConfig;
 
     this.config.hideBarTime = this.config.barShowByMouse === 'move' ? this.config.hideBarTime : 0;
-    this.$dom.innerHTML = '<chimee-control-wrap></chimee-control-wrap>';
+    this.$dom.innerHTML = `<chimee-control-wrap>
+        <chimee-control-wrap-left></chimee-control-wrap-left>
+        <chimee-control-wrap-right></chimee-control-wrap-right>
+    </chimee-control-wrap>`;
     this.$wrap = this.$dom.querySelector('chimee-control-wrap');
+    this.$wrapLeft = this.$dom.querySelector('chimee-control-wrap-left');
+    this.$wrapRight = this.$dom.querySelector('chimee-control-wrap-right');
     this.children = createChild(this);
     this._setStyle();
   },

@@ -17,6 +17,7 @@ const defaultOption = {
         <span>跳过片头片尾：</span><span class="yes">是</span><span class="no">否</span>
     </chimee-setting-panel>
   `,
+  alignRight: true,
   defaultEvent: {
     click: 'click'
   }

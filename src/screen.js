@@ -20,6 +20,7 @@ const defaultOption = {
       </svg>
     </chimee-screen-small>
   `,
+  alignRight: true,
   defaultEvent: {
     click: 'click'
   }

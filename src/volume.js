@@ -24,6 +24,7 @@ const defaultOption = {
       </chimee-volume-bar-wrap>
     </chimee-volume-bar>
   `,
+  alignRight: true,
   animate: {
     icon: `
     <svg id="pad-voice" viewBox="0 0 13 14.6" width="100%" height="100%">

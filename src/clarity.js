@@ -14,6 +14,7 @@ const defaultOption = {
       <ul></ul>
     </chimee-clarity-list>
   `,
+  alignRight: true,
   defaultEvent: {
     click: 'click'
   },
