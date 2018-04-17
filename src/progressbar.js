@@ -135,7 +135,6 @@ export default class ProgressBar extends Base {
     this.skipEndTime = Number(this.keyPoints.end.split("|")[0]) || 0;
 
     // 跳过片头打点
-    console.log(this.skipStartTime , this.duration)
     if (this.skipStartTime > 0 && this.skipStartTime < this.duration) {
       this.createPoint(this.skipStartTime)
     }
