@@ -202,6 +202,7 @@ chimee-progresstime.chimee-flex-component {
   white-space: nowrap;
   margin-left: 10px;
   font-size: 16px;
+  vertical-align: middle;
 }
 
 chimee-progresstime-pass,
@@ -211,6 +212,7 @@ chimee-progresstime-total {
 
 chimee-progresstime-total span{
   display: inline-block;
+  vertical-align: middle;
   margin: 0 4px;
 }
 
@@ -226,6 +228,7 @@ chimee-progressbar.chimee-flex-component {
 
 chimee-progressbar-wrap {
   display: inline-block;
+  vertical-align: middle;
   height: 10px;
   position: absolute;
   left: 16px;
