@@ -7,6 +7,7 @@ import ProgressTime from './progresstime.js';
 import Setting from './setting.js';
 import Screen from './screen.js';
 import Clarity from './clarity.js';
+import Tip from './tip.js';
 
 function hundleChildren (plugin) {
   let childConfig = {};
@@ -27,6 +28,7 @@ function hundleChildren (plugin) {
       clarity: true, // 清晰度控制
       setting: true, // 设置按钮
       screen: true, // 全屏控制
+      tip: true,
     };
   }else{
     childConfig = plugin.$config.children;
@@ -91,6 +93,11 @@ export function createChild (plugin) {
           // && Array.isArray(childConfig.clarity.list)
           if(childConfig.clarity) {
             children.clarity = new Clarity(plugin, childConfig.clarity);
+          }
+          break;
+        case 'tip':
+          if(childConfig.tip) {
+            children.tip = new Tip(plugin, childConfig.tip);
           }
           break;
         default:

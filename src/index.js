@@ -100,44 +100,47 @@ const chimeeControl = {
       this.children.playNext.setNextVideoInfo(nextvideoinfo)
     },
 
-
     // 调度信息获取的时候设置清晰度列表
     dispactherDataComplete(data){
       this.children.clarity.initTextList(data.stream, data.stream[0])
     },
 
+    // 清晰度切换完成
     clarityChanged(data) {
       this.children.clarity.clarityChanged(data)
-    }
+    },
 
+    // 视频即将结束（还有10s的时候出发）
+    videoWillEnd(time) {
+      this.children.next.onVideoWillEnd(time)
+    },
+
+    // 下一集信息获取
+    nextVideoInfo(nextvideoinfo) {
+      this.children.next.setNextVideoInfo(nextvideoinfo);
+    },
+
+    // 前贴片广告开始
     frontAdBegin(){
-      console.log('front ad begin')
       this.adlock = true;
       this._disable(true);
       setStyle(this.$dom, {
         visibility: 'hidden'
       });
     },
+
     videoPlay(){
-      console.log('video play')
       this.adlock = false;
       this._disable(false);
-    },
-    loadstart () {
-      // this._disable(true);
-    },
-    canplay () {
-      // this._disable(false);
-    },
-    play () {
       this.children.play && this.children.play.changeState('play');
       this.config.barShowByMouse === 'move' && this._hideItself();
     },
-    pause () {
+    
+    videoPause () {
       if(this.adlock) return;
       this.children.play && this.children.play.changeState('pause');
       this._showItself();
-    },
+    }
     c_mouseenter () {
       if(this.adlock) return;
       if(this.config.barShowByMouse === 'move') return;

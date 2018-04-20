@@ -141,7 +141,7 @@ chimee-control-playnext:hover chimee-control-nextvideoinfo{
   display: block;
 }
 
-chimee-control-nextvideoinfo{
+.u-next-box{
   display: none;
   position: absolute;
   bottom: 60px;
@@ -154,7 +154,7 @@ chimee-control-nextvideoinfo{
   text-align: left;
 }
 
-chimee-control-nextvideoinfo h2 {
+.u-next-box h2 {
   height: 26px;
   font-size: 14px;
   line-height: 26px;
@@ -163,21 +163,21 @@ chimee-control-nextvideoinfo h2 {
   font-weight: 400;
 }
 
-chimee-control-nextvideoinfo .nextbox {
+.u-next-box .nextbox {
   width: 275px;
   height: 84px;
   display: block;
   padding: 0 0 10px 0;
 }
 
-chimee-control-nextvideoinfo .nextbox .pic{
+.u-next-box .nextbox .pic{
   margin: 0;padding: 0;
   float: right;
   margin-left: 15px;
 }
 
 
-chimee-control-nextvideoinfo .nextbox .n{
+.u-next-box .nextbox .n{
   margin: 0;padding: 0;
   font-size: 14px;
   overflow: hidden;
@@ -189,7 +189,7 @@ chimee-control-nextvideoinfo .nextbox .n{
   -webkit-box-orient: vertical;
 }
 
-chimee-control-nextvideoinfo .nextbox .t{
+.u-next-box .nextbox .t{
   line-height: 18px;
   color: #fff;
   margin-top: 6px;
