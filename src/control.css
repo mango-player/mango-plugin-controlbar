@@ -195,6 +195,12 @@ chimee-control-playnext:hover chimee-control-nextvideoinfo{
   margin-top: 6px;
 }
 
+chimee-control-nextvideo-tip.u-next-box{
+  right: 16px;
+  left: auto;
+}
+chimee-control-nextvideo-tip .tit i{color: #f06000;font-style: normal;}
+
 /* 时间显示 */
 chimee-progresstime.chimee-flex-component {
   color: #fff;

@@ -112,12 +112,7 @@ const chimeeControl = {
 
     // 视频即将结束（还有10s的时候出发）
     videoWillEnd(time) {
-      this.children.next.onVideoWillEnd(time)
-    },
-
-    // 下一集信息获取
-    nextVideoInfo(nextvideoinfo) {
-      this.children.next.setNextVideoInfo(nextvideoinfo);
+      this.children.playNext.onVideoWillEnd(time)
     },
 
     // 前贴片广告开始

@@ -1,4 +1,4 @@
-import {deepAssign, isObject, addClassName, removeClassName, $} from 'mango-helper';
+import { deepAssign, isObject, addClassName, removeClassName, $ } from 'mango-helper';
 import Base from './base.js';
 
 /**
@@ -16,17 +16,17 @@ const defaultOption = {
     <chimee-control-nextvideoinfo class="u-next-box">
         <h2 class="tit">下一个</h2>
         <div class="nextbox">
-            <p class="pic"><img src="http://1img.hitv.com/preview/sp_images/2018/zongyi/322562/4355158/20180416192417318.jpg" width="130" height="74"></p>
-            <p class="n">Jasper咘咘比美！谁更受欢迎？</p>
-            <p class="t">02:44</p>
+            <p class="pic"><img src="" width="130" height="74"></p>
+            <p class="n"></p>
+            <p class="t"></p>
         </div>
     </chimee-control-nextvideoinfo>
     <chimee-control-nextvideo-tip class="u-next-box">
         <h2 class="tit"><i>10</i> 秒之后，即将为您播放</h2>
         <div class="nextbox">
-            <p class="pic"><img src="http://1img.hitv.com/preview/sp_images/2018/zongyi/322562/4355158/20180416192417318.jpg" width="130" height="74"></p>
-            <p class="n">Jasper咘咘比美！谁更受欢迎？</p>
-            <p class="t">02:44</p>
+            <p class="pic"><img src="" width="130" height="74"></p>
+            <p class="n"></p>
+            <p class="t"></p>
         </div>
     </chimee-control-nextvideoinfo>
   `,
@@ -36,13 +36,13 @@ const defaultOption = {
 };
 
 export default class PlayNext extends Base {
-  constructor (parent, option) {
+  constructor(parent, option) {
     super(parent);
     this.option = deepAssign(defaultOption, isObject(option) ? option : {});
     this.init();
   }
 
-  init () {
+  init() {
     // 创建 html ／ 绑定事件
     super.create();
     this.$dom = $(this.$dom);
@@ -52,24 +52,51 @@ export default class PlayNext extends Base {
   }
 
   // 下一集视频信息获取的时候
-  setNextVideoInfo(nextvideoinfo){
-    this.$nextvideo.find('img').attr('src', nextvideoinfo.image)
+  setNextVideoInfo(nextvideoinfo) {
+    this.$nextvideo.find('img').attr('src', nextvideoinfo.img)
     this.$nextvideo.find('.n').html(nextvideoinfo.title)
     this.$nextvideo.find('.t').html(nextvideoinfo.duration)
   }
 
   // 视频即将结束
-  onVideoWillEnd(time){
-    this.$nextvideotip.find('.tit i').html(time)
-    this.$nextvideotip.show();
+  onVideoWillEnd() {
+    let time = 10
+    this.$nextvideotip.find('.tit i').html(time);
+    this.$nextvideotip.css('display', 'block');
+    this.downcounttimer = setInterval(()=>{
+      time--;
+      this.$nextvideotip.find('.tit i').html(time);
+      if(time <= 1) {
+        this.hideWillEndTip();
+      }
+    }, 1000)
+  }
+
+  // 隐藏视频即将结束弹窗
+  hideWillEndTip(){
+    this.$nextvideotip.css('display', 'none');
+    this.downcounttimer && clearInterval(this.downcounttimer);
   }
 
   // 播放下一集信息
-  playNext(){
-    
+  playNext() {
+    if (this.parent.config.web_jump) {
+      // 如果交给页面控制刷新
+      this.parent.requesetRefreshPage()
+    } else {
+      // 如果页面上有自定义的nextUrl,直接取这个值并返回 
+      let nextUrl = this.parent.getNextPlayUrl()
+      if (nextUrl) {
+        window.location.href = nextUrl
+        return;
+      } else if (this.nextVideoInfo && this.nextVideoInfo.url) {
+        window.location.href = this.nextVideoInfo.url;
+      }
+    }
+
   }
 
-  click (e) {
+  click(e) {
     this.playNext();
     this.parent.$emit('playNextVideo');
   }
