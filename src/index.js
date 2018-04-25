@@ -90,9 +90,11 @@ const chimeeControl = {
   },
   events: {
     // cms 一层接口成功
-    cmsDataComplete(cmsData){
-      this.children.progressBar.initKeyPoints(cmsData.points, cmsData.info.duration);
-      this.children.progressBar.initFrames(cmsData.frame);
+    cmsData(data){
+      if(data.status == 'loadComplete') {
+        this.children.progressBar.initKeyPoints(data.data.points, data.data.info.duration);
+        this.children.progressBar.initFrames(data.data.frame);
+      }
     },
 
     // 下一集信息返回的时候
@@ -101,8 +103,10 @@ const chimeeControl = {
     },
 
     // 调度信息获取的时候设置清晰度列表
-    dispactherDataComplete(data){
-      this.children.clarity.initTextList(data.stream, data.stream[0])
+    getDispatcher(data){
+      if(data.status == 'loadComplete') {
+        this.children.clarity.initTextList(data.data.stream, data.data.stream[0])
+      }
     },
 
     // 清晰度切换完成
