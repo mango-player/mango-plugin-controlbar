@@ -102,8 +102,8 @@ const chimeeControl = {
       this.children.playNext.setNextVideoInfo(nextvideoinfo)
     },
 
-    // 调度信息获取的时候设置清晰度列表
-    getDispatcher(data){
+    // 视频流信息获取的时候设置清晰度列表
+    getSource(data){
       if(data.status == 'loadComplete') {
         this.children.clarity.initTextList(data.data.stream, data.data.stream[0])
       }
@@ -133,6 +133,9 @@ const chimeeControl = {
       this._disable(false);
       this.children.play && this.children.play.changeState('play');
       this.config.barShowByMouse === 'move' && this._hideItself();
+      setStyle(this.$dom, {
+        visibility: 'visible'
+      });
     },
     
     videoPause () {
